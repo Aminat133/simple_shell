@@ -25,6 +25,7 @@ char *_strtok(char *str, const char *delim)
 	while (*nextToken != '\0')
 	{
 		const char *d;
+
 		for (d = delim; *d != '\0'; d++)
 		{
 			if (*nextToken == *d)
