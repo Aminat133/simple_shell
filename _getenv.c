@@ -1,12 +1,10 @@
 #include "main.h"
-
 /**
- * _getenv - gets the environment.
- * @name: varname to find.
- * Return: nothing.
+ * _getenv - our own function for gettin
+ * the environment variables
+ *@name: represents env variable
+ * Return: it returns null
  */
-
-
 char *_getenv(const char *name)
 {
 	size_t nameLength;
@@ -16,7 +14,7 @@ char *_getenv(const char *name)
 		return (NULL);
 	nameLength = strlen(name);
 
-	for (env = (char **)environ; *env != NULL; env++)
+	for (env = environ; *env != NULL; env++)
 	{
 		if (strncmp(*env, name, nameLength) == 0 && (*env)[nameLength] == '=')
 			return (&(*env)[nameLength + 1]);
@@ -24,4 +22,3 @@ char *_getenv(const char *name)
 
 	return (NULL);
 }
-

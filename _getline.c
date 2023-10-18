@@ -12,7 +12,7 @@ ssize_t _getline(char **line, size_t *size, FILE *stream)
 {
 	ssize_t bytesRead = 0, totalBytesRead = 0;
 	int c;
-	char *newLine = (char *)realloc(*line, *size);
+	char *newLine;
 
 	if (line == NULL || size == NULL || stream == NULL)
 		return (-1);
@@ -37,6 +37,7 @@ ssize_t _getline(char **line, size_t *size, FILE *stream)
 		if (bytesRead >= (ssize_t)(*size - 1))
 		{
 			*size *= 2;
+	newLine = (char *)realloc(*line, *size);
 			if (newLine == NULL)
 			{
 				free(*line);

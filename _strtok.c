@@ -12,15 +12,16 @@
 char *_strtok(char *str, const char *delim)
 {
 	static char *nextToken;
-	char *tokenStart = nextToken;
-	char *tokenEnd = NULL;
+	char *tokenStart;
+	char *tokenEnd;
 
 	if (str != NULL)
 		nextToken = str;
 
 	if (nextToken == NULL || *nextToken == '\0')
 		return (NULL);
-
+	tokenStart = nextToken;
+	tokenEnd = NULL;
 	/* Find the end of the token*/
 	while (*nextToken != '\0')
 	{
