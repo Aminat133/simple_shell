@@ -14,6 +14,7 @@ ssize_t _getline(char **line, size_t *size, FILE *stream)
 		return (-1);
 	ssize_t bytesRead = 0, totalBytesRead = 0;
 	int c;
+	char *newLine = (char *)realloc(*line, *size);
 
 	if (*line == NULL)
 	{
@@ -36,11 +37,8 @@ ssize_t _getline(char **line, size_t *size, FILE *stream)
 		if (bytesRead >= *size - 1)
 		{
 			*size *= 2;
-			char *newLine = (char *)realloc(*line, *size);
-
 			if (newLine == NULL)
 			{
-				free(*line);
 				*line = NULL;
 				return (-1);
 			}
@@ -49,7 +47,9 @@ ssize_t _getline(char **line, size_t *size, FILE *stream)
 		if (c == '\n')
 			break;
 	}
+	free(*line);
 	(*line)[bytesRead] = '\0';
 	return (totalBytesRead);
 }
+
 
