@@ -9,11 +9,14 @@
 
 char *_getenv(const char *name)
 {
+	size_t nameLength;
+	char **env;
+
 	if (name == NULL || environ == NULL)
 		return (NULL);
-	size_t nameLength = strlen(name);
+	nameLength = strlen(name);
 
-	for (char **env = environ; *env != NULL; env++)
+	for (env = (char **)environ; *env != NULL; env++)
 	{
 		if (strncmp(*env, name, nameLength) == 0 && (*env)[nameLength] == '=')
 			return (&(*env)[nameLength + 1]);
