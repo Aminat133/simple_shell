@@ -11,41 +11,40 @@
 
 char *_strtok(char *str, const char *delim)
 {
-        static char *nextToken;
+	static char *nextToken;
 
-        if (str != NULL)
-                nextToken = str;
+	if (str != NULL)
+		nextToken = str;
 
-        if (nextToken == NULL || *nextToken == '\0')
-                return (NULL);
+	if (nextToken == NULL || *nextToken == '\0')
+		return (NULL);
 
-        char *tokenStart = nextToken;
-        char *tokenEnd = NULL;
+	char *tokenStart = nextToken;
+	char *tokenEnd = NULL;
 
-        /* Find the end of the token*/
-        while (*nextToken != '\0')
-        {
-                for (const char *d = delim; *d != '\0'; d++)
-                {
-                        if (*nextToken == *d)
-                        {
-                        /*null terminate the token*/
-                                *nextToken = '\0';
-                                tokenEnd = nextToken;
-                                nextToken++;
-                                break;
-                        }
-                }
-                if (tokenEnd != NULL)
-                        break;
+	/* Find the end of the token*/
+	while (*nextToken != '\0')
+	{
+		for (const char *d = delim; *d != '\0'; d++)
+		{
+			if (*nextToken == *d)
+			{
+			/*null terminate the token*/
+			*nextToken = '\0';
+			tokenEnd = nextToken;
+			nextToken++;
+			break;
+			}
+		}
+		if (tokenEnd != NULL)
+			break;
 
-                nextToken++;
-        }
+		nextToken++;
+	}
 
-        if (tokenEnd == NULL)
-                nextToken = NULL;
+	if (tokenEnd == NULL)
+		nextToken = NULL;
 
-        return (tokenStart);
+	return (tokenStart);
 }
-
 
