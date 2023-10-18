@@ -9,39 +9,39 @@
  */
 void execute_command(char *cmd)
 {
-		char *argv[MAX_ARGS];
-		int argc = 0;
+	char *argv[MAX_ARGS];
+	int argc = 0;
 
-		argv[argc] = strtok(cmd, " \n");
+	argv[argc] = strtok(cmd, " \n");
 
-		while (argv[argc] != NULL && argc < MAX_ARGS - 1)
-		{
-				argc++;
-				argv[argc] = strtok(NULL, " \n");
-		}
+	while (argv[argc] != NULL && argc < MAX_ARGS - 1)
+	{
+		argc++;
+		argv[argc] = strtok(NULL, " \n");
+	}
 
-		argv[argc] = NULL;
+	argv[argc] = NULL;
 
-		if (argc == 0)
-		{
-				return; /* Empty command */
-		}
+	if (argc == 0)
+	{
+		return; /* Empty command */
+	}
 
-		pid_t pid = fork();
+	pid_t pid = fork();
 
-		if (pid == -1)
-		{
-				perror("fork");
-				exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-		{
-				execute_child_process(argv);
-		}
-		else
-		{
-				execute_parent_process(pid);
-		}
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		execute_child_process(argv);
+	}
+	else
+	{
+		execute_parent_process(pid);
+	}
 }
 
 /**
@@ -52,28 +52,28 @@ void execute_command(char *cmd)
 void execute_child_process(char *argv[])
 {
 
-		execve(argv[0], argv, environ);
+	execve(argv[0], argv, environ);
 
-		char *path = _getenv("PATH");
-		char *dir = _strtok(path, ":");
+	char *path = _getenv("PATH");
+	char *dir = _strtok(path, ":");
 
-		while (dir != NULL)
+	while (dir != NULL)
+	{
+		char full_path[1024];
+
+		snprintf(full_path, sizeof(full_path), "%s/%s", dir, argv[0]);
+
+		if (access(full_path, X_OK) == 0)
 		{
-				char full_path[1024];
-
-				snprintf(full_path, sizeof(full_path), "%s/%s", dir, argv[0]);
-
-				if (access(full_path, X_OK) == 0)
-				{
-						execve(full_path, argv, environ);
-						perror("execve");
-						exit(EXIT_FAILURE);
-				}
-				dir = _strtok(NULL, ":");
+			execve(full_path, argv, environ);
+			perror("execve");
+			exit(EXIT_FAILURE);
 		}
+		dir = _strtok(NULL, ":");
+	}
 
-		printf("%s: command not found\n", argv[0]);
-		exit(EXIT_FAILURE);
+	printf("%s: command not found\n", argv[0]);
+	exit(EXIT_FAILURE);
 }
 
 /**
@@ -83,9 +83,8 @@ void execute_child_process(char *argv[])
  */
 void execute_parent_process(pid_t pid)
 {
-		int status;
+	int status;
 
-		waitpid(pid, &status, 0);
+	waitpid(pid, &status, 0);
 }
-
 
