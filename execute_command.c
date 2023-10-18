@@ -1,6 +1,7 @@
 #include "main.h"
 #include <sys/wait.h>
 #include <errno.h>
+#include <string.h>
 
 /**
  * execute_command - Execute the command specified in `cmd`
@@ -58,7 +59,7 @@ char *dir;
 	execve(argv[0], argv, environ);
 
 	path = _getenv("PATH");
-	dir = _strtok(path, ":");
+	dir = strtok(path, ":");
 
 	while (dir != NULL)
 	{
