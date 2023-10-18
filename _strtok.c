@@ -12,6 +12,8 @@
 char *_strtok(char *str, const char *delim)
 {
 	static char *nextToken;
+	char *tokenStart = nextToken;
+	char *tokenEnd = NULL;
 
 	if (str != NULL)
 		nextToken = str;
@@ -19,13 +21,11 @@ char *_strtok(char *str, const char *delim)
 	if (nextToken == NULL || *nextToken == '\0')
 		return (NULL);
 
-	char *tokenStart = nextToken;
-	char *tokenEnd = NULL;
-
 	/* Find the end of the token*/
 	while (*nextToken != '\0')
 	{
-		for (const char *d = delim; *d != '\0'; d++)
+		const char *d;
+		for (d = delim; *d != '\0'; d++)
 		{
 			if (*nextToken == *d)
 			{
