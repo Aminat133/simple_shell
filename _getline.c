@@ -39,6 +39,7 @@ ssize_t _getline(char **line, size_t *size, FILE *stream)
 			*size *= 2;
 			if (newLine == NULL)
 			{
+				free(*line);
 				*line = NULL;
 				return (-1);
 			}
@@ -47,7 +48,6 @@ ssize_t _getline(char **line, size_t *size, FILE *stream)
 		if (c == '\n')
 			break;
 	}
-	free(*line);
 	(*line)[bytesRead] = '\0';
 	return (totalBytesRead);
 }
