@@ -27,9 +27,9 @@ int _strcmp(const char *s1, const char *s2);
 int _puts(const char *str);
 int _putchar(int character);
 size_t _strcspn(const char *str, const char *reject);
-void* _realloc(void *ptr, size_t new_size);
-char* _strcat(char *dest, const char *src);
-char* _strcpy(char *dest, const char *src);
+void *_realloc(void *ptr, size_t new_size);
+char *_strcat(char *dest, const char *src);
+char *_strcpy(char *dest, const char *src);
 int _strncmp(const char *str1, const char *str2, size_t n);
 
 #endif
