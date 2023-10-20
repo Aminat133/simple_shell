@@ -13,12 +13,12 @@ void execute_command(char *cmd)
 	int argc = 0;
 	pid_t pid;
 
-	argv[argc] = strtok(cmd, " \n");
+	argv[argc] = _strtok(cmd, " \n");
 
 	while (argv[argc] != NULL && argc < MAX_ARGS - 1)
 	{
 		argc++;
-		argv[argc] = strtok(NULL, " \n");
+		argv[argc] = _strtok(NULL, " \n");
 	}
 
 	argv[argc] = NULL;
@@ -64,7 +64,9 @@ char *dir;
 	{
 		char full_path[1024];
 
-		snprintf(full_path, sizeof(full_path), "%s/%s", dir, argv[0]);
+		_strcpy(full_path,dir);
+		_strcat(full_path,"/");
+		_strcat(full_path,argv[0]);
 
 		if (access(full_path, X_OK) == 0)
 		{
@@ -75,7 +77,8 @@ char *dir;
 		dir = _strtok(NULL, ":");
 	}
 
-	printf("%s: command not found\n", argv[0]);
+	_puts(argv[0]);
+	_puts(": command not found\n");
 	exit(EXIT_FAILURE);
 }
 

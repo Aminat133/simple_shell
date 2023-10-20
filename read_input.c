@@ -13,14 +13,14 @@ char *read_input(void)
 	char *cmd = NULL;
 	size_t n = 0;
 
-	if (_getline(&cmd, &n, stdin) == -1)
+	if (_getline(&cmd, &n) == -1)
 	{
-		printf("Error reading input.\n");
+		_puts("Error reading input.\n");
 		free(cmd);
 		exit(EXIT_FAILURE);
 	}
 
-	cmd[strcspn(cmd, "\n")] = '\0';
+	cmd[_strcspn(cmd, "\n")] = '\0';
 	return (cmd);
 }
 

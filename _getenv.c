@@ -12,11 +12,11 @@ char *_getenv(const char *name)
 
 	if (name == NULL || environ == NULL)
 		return (NULL);
-	nameLength = strlen(name);
+	nameLength = _strlen(name);
 
 	for (env = environ; *env != NULL; env++)
 	{
-		if (strncmp(*env, name, nameLength) == 0 && (*env)[nameLength] == '=')
+		if (_strncmp(*env, name, nameLength) == 0 && (*env)[nameLength] == '=')
 			return (&(*env)[nameLength + 1]);
 	}
 

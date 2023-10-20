@@ -13,14 +13,14 @@ int main(void)
 
 	while (running)
 	{
-		printf("$ ");
+		_puts("$ ");
 		cmd = read_input();
 
-		if (strcmp(cmd, "exit") == 0)
+		if (_strcmp(cmd, "exit") == 0)
 		{
 			running = 0;
 		}
-		else if (strcmp(cmd, "env") == 0)
+		else if (_strcmp(cmd, "env") == 0)
 		{
 			execute_env();
 		}

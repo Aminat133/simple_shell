@@ -1,132 +1,51 @@
 #include "main.h"
 
 /**
- * allocateMemory - allocates memory for line buffer
- * @line: double pointer to line buffer
- * @size: pointer to size of line buffer
+ * _getline - Reads a line of input from stdin.
+ * @line: A pointer to a buffer to store the line in.
+ * @n: A pointer to the size of the buffer.
  *
- * Return: 0 on success, -1 on failure
+ * Return: The number of bytes read, or -1 on failure.
  */
-int allocateMemory(char **line, size_t *size)
-{
-	if (line == NULL || size == NULL)
-		return (-1);
+ssize_t _getline(char **line, size_t *n) {
+	ssize_t bytesRead = 0;
+	char ch;
 
-	*size = 128;
-	*line = malloc(*size);
-	if (*line == NULL)
-		return (-1);
-
-	return (0);
-}
-
-/**
- * readCharacter - reads a character from the stream
- * @stream: pointer to stream to read from
- * @line: double pointer to line buffer
- * @bytesRead: pointer to bytes read
- * @totalBytesRead: pointer to total bytes read
- * @size: pointer to size of line buffer
- *
- * Return: 0 on success, -1 on failure
- */
-int readCharacter(FILE *stream, char **line, ssize_t *bytesRead,
-		ssize_t *totalBytesRead, size_t *size)
-{
-	int c;
-
-	c = fgetc(stream);
-	if (c == EOF)
-	{
-		if (*bytesRead == 0)
-			return (-1);
-		return (1);
+	if (line == NULL || n == NULL) {
+		return (-1);  /* Invalid arguments*/
 	}
-	(*line)[*bytesRead] = (char)c;
-	(*bytesRead)++;
-	(*totalBytesRead)++;
-	if (*bytesRead >= (ssize_t)(*size - 1))
-	{
-		if (resizeLineBuffer(line, size) == -1)
-			return (-1);
-	}
-	if (c == '\n')
-		return (1);
 
-	return (0);
-}
-
-/**
- * resizeLineBuffer - resizes the line buffer
- * @line: double pointer to line buffer
- * @size: pointer to size of line buffer
- *
- * Return: 0 on success, -1 on failure
- */
-int resizeLineBuffer(char **line, size_t *size)
-{
-	char *newLine;
-
-	*size *= 2;
-	newLine = realloc(*line, *size);
-	if (newLine == NULL)
-	{
-		free(*line);
-		*line = NULL;
-		return (-1);
-	}
-	*line = newLine;
-
-	return (0);
-}
-
-/**
- * _getline - reads and stores the input from the keyboard.
- * @line: double pointer to storage.
- * @size: size of storage.
- * @stream: where to read the input from.
- *
- * Return: the total bytes read.
- */
-ssize_t _getline(char **line, size_t *size, FILE *stream)
-{
-	ssize_t bytesRead = 0, totalBytesRead = 0;
-	int c;
-
-	if (line == NULL || size == NULL || stream == NULL)
-		return (-1);
-	if (*line == NULL)
-	{
-		*size = 128;
-		*line = malloc(*size);
-		if (*line == NULL)
-			return (-1);
-	}
-	while (1)
-	{
-		c = fgetc(stream);
-		if (c == EOF)
-		{
-			if (bytesRead == 0)
-				return (-1);
-			break;
+	if (*line == NULL) {
+		*n = 128;
+		*line = (char *)malloc(*n);
+		if (*line == NULL) {
+			return (-1);  /* Memory allocation failed*/
 		}
-		(*line)[bytesRead++] = (char)c;
-		totalBytesRead++;
-		if (bytesRead >= (ssize_t)(*size - 1))
-		{
-			if (resizeLineBuffer(line, size) == -1)
-			{
-				free(*line);
-				*line = NULL;
-				return (-1);
+	}
+
+	while (read(STDIN_FILENO, &ch, 1) > 0) {
+		if (ch == '\n') {
+			(*line)[bytesRead] = '\0';
+			return (bytesRead);
+		}
+
+		(*line)[bytesRead] = ch;
+		bytesRead++;
+
+		if (bytesRead >= (ssize_t)(*n - 1)) {
+			*n *= 2;
+			*line = (char *)_realloc(*line, *n);
+			if (*line == NULL) {
+				return (-1);  /* Memory reallocation failed*/
 			}
 		}
-		if (c == '\n')
-			break;
 	}
-	(*line)[bytesRead] = '\0';
 
-	return (totalBytesRead);
+	if (bytesRead > 0) {
+		(*line)[bytesRead] = '\0';
+		return (bytesRead);
+	}
+
+	return (-1);  /* No input or error*/
 }
 

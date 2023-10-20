@@ -12,7 +12,8 @@ void execute_env(void)
 
 	while (*env)
 	{
-		printf("%s\n", *env);
+		_puts(*env);
+		_puts("\n");
 		env++;
 	}
 }
