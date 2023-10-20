@@ -9,13 +9,15 @@
  */
 void *_realloc(void *ptr, size_t new_size)
 {
-	if (new_size == 0) {
+	if (new_size == 0)
+	{
 		free(ptr);  /* If the new size is 0, free the old memory and return NULL */
 		return (NULL);
 	} else if (ptr == NULL)
 	{
-		return (malloc(new_size));  /* If the pointer is NULL, simply allocate new memory */
-	} else
+		return (malloc(new_size));  /* If pointer is NULL, allocate new memory */
+	}
+	else
 	{
 		void *new_ptr = malloc(new_size);
 
@@ -25,12 +27,13 @@ void *_realloc(void *ptr, size_t new_size)
 			char *dst = (char *)new_ptr;
 			size_t i;
 
-			for ( i = 0; i < new_size; i++)
+			for (i = 0; i < new_size; i++)
 				dst[i] = src[i];
 
 			free(ptr);  /* Free the old memory */
 			return (new_ptr);
-		} else
+		}
+		else
 		{
 			return (NULL);
 		}
@@ -45,7 +48,7 @@ void *_realloc(void *ptr, size_t new_size)
  *
  * Return: A pointer to the resulting concatenated string.
  */
-char* _strcat(char *dest, const char *src)
+char *_strcat(char *dest, const char *src)
 {
 	char *originalDest = dest;
 
@@ -65,7 +68,7 @@ char* _strcat(char *dest, const char *src)
 
 	*dest = '\0'; /* Null-terminate the concatenated string */
 
-	return originalDest;
+	return (originalDest);
 }
 
 /**
@@ -75,7 +78,7 @@ char* _strcat(char *dest, const char *src)
  *
  * Return: A pointer to the resulting copied string.
  */
-char* _strcpy(char *dest, const char *src)
+char *_strcpy(char *dest, const char *src)
 {
 	char *originalDest = dest;
 
@@ -88,7 +91,7 @@ char* _strcpy(char *dest, const char *src)
 
 	*dest = '\0'; /* Null-terminate the destination string */
 
-	return originalDest;
+	return (originalDest);
 }
 
 /**
@@ -97,8 +100,9 @@ char* _strcpy(char *dest, const char *src)
  * @str2: The second string to compare.
  * @n: The maximum number of characters to compare.
  *
- * Return: An integer less than, equal to, or greater than zero if str1 is found,
- * respectively, to be less than, to match, or be greater than str2 up to 'n' characters.
+ * Return: int less than, equal to, or greater than zero if str1 is found,
+ * respectively, to be less than, to match, or be greater than str2 up
+ * to 'n' characters.
  */
 int _strncmp(const char *str1, const char *str2, size_t n)
 {
@@ -111,14 +115,14 @@ int _strncmp(const char *str1, const char *str2, size_t n)
 
 	if (n == 0 || (*str1 == '\0' && *str2 == '\0'))
 	{
-		return 0; /* Strings are equal up to 'n' characters */
+		return (0); /* Strings are equal up to 'n' characters */
 	}
 	else if (*str1 < *str2)
 	{
-		return -1; /* str1 is less than str2 */
+		return (-1); /* str1 is less than str2 */
 	}
 	else
 	{
-		return 1; /* str1 is greater than str2 */
+		return (1); /* str1 is greater than str2 */
 	}
 }

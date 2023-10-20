@@ -45,7 +45,8 @@ int _puts(const char *str)
 {
 	int i;
 	/* Loop through the characters of the string */
-	for (i = 0; str[i] != '\0'; i++) {
+	for (i = 0; str[i] != '\0'; i++)
+	{
 		/* Call our custom putchar function to print each character */
 		_putchar(str[i]);
 	}
@@ -61,10 +62,13 @@ int _puts(const char *str)
  */
 int _putchar(int character)
 {
-	/* Use the write function to write the character to stdout (file descriptor 1) */
-	if (write(1, &character, 1) == 1) {
+	/* Use write function to write chr to stdout (file descriptor 1) */
+	if (write(1, &character, 1) == 1)
+	{
 		return ((int)(unsigned char)character);
-	} else {
+	}
+	else
+	{
 		return (EOF);
 	}
 }
@@ -85,14 +89,13 @@ size_t _strcspn(const char *str, const char *reject)
 	/* Create a lookup table to check if a character in 'reject' is present */
 	int lookup[256] = {0};
 	const char *r;
-	for (r = reject; *r != '\0'; ++r) {
-		lookup[(unsigned char)*r] = 1;
-	}
 
-	/* Iterate through 'str' and count characters until one is found in 'reject' */
-	while (str[length] != '\0' && !lookup[(unsigned char)str[length]]) {
+	for (r = reject; *r != '\0'; ++r)
+		lookup[(unsigned char)*r] = 1;
+
+	/* Iterate through 'str' and count chrs until one is found in 'reject' */
+	while (str[length] != '\0' && !lookup[(unsigned char)str[length]])
 		length++;
-	}
 
 	return (length);
 }

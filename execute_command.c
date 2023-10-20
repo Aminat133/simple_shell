@@ -64,9 +64,9 @@ char *dir;
 	{
 		char full_path[1024];
 
-		_strcpy(full_path,dir);
-		_strcat(full_path,"/");
-		_strcat(full_path,argv[0]);
+		_strcpy(full_path, dir);
+		_strcat(full_path, "/");
+		_strcat(full_path, argv[0]);
 
 		if (access(full_path, X_OK) == 0)
 		{
