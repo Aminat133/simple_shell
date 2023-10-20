@@ -14,6 +14,8 @@ int main(void)
 	while (running)
 	{
 		_puts("$ ");
+		fflush(stdout);
+
 		cmd = read_input();
 
 		if (_strcmp(cmd, "exit") == 0)
